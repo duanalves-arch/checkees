@@ -1,4 +1,4 @@
-from constants import CASA_VAZIA
+from constants import CASA_VAZIA, PEAO_BRANCO, BISPO_BRANCO, CAVALO_BRANCO, TORRE_BRANCA, RAINHA_BRANCA, REI_BRANCO, PEAO_PRETO, BISPO_PRETO, CAVALO_PRETO, TORRE_PRETA, RAINHA_PRETA, REI_PRETO
 
 
 class Board:
@@ -29,12 +29,22 @@ class Board:
 
         return coluna, linha
 
+    def botar_peca(self, coordenadas: tuple[int, int], peca: int):
+        coluna, linha = coordenadas
+        if not self.coordenadas_sao_validas(coluna, linha):
+            raise ValueError("Coordenadas inválidas")
+        if self.casa_ocupada(coordenadas):
+            raise ValueError("Casa já ocupada")
+        self.tabuleiro[linha][coluna] = peca
 
-tabuleiro_padrao = Board((8, 8))
+    def casa_ocupada(self, coordenadas: tuple[int, int]) -> bool:
+        coluna, linha = coordenadas
+        if not self.coordenadas_sao_validas(coluna, linha):
+            raise ValueError("Coordenadas inválidas")
+        return self.tabuleiro[linha][coluna] != CASA_VAZIA
 
-for linha in range(8):
-    for coluna in range(8):
-        coordenada = tabuleiro_padrao.converter_para_notacao_algebrica(coluna, linha)
-        print(coordenada, end=' ')
-        print(tabuleiro_padrao.converter_notacao_algebrica_para_coordenadas(coordenada), end=' ')
-    print()
+    def tirar_peca(self, coordenadas: tuple[int, int]):
+        coluna, linha = coordenadas
+        if not self.coordenadas_sao_validas(coluna, linha):
+            raise ValueError("Coordenadas inválidas")
+        self.tabuleiro[linha][coluna] = CASA_VAZIA
