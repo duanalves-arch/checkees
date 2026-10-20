@@ -1,4 +1,4 @@
-from constants import (
+from .constants import (
     CASA_VAZIA,
     PEAO_BRANCO,
     BISPO_BRANCO,
